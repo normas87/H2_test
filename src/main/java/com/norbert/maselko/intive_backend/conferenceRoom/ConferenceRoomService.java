@@ -2,14 +2,12 @@ package com.norbert.maselko.intive_backend.conferenceRoom;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ConferenceRoomService {
+public class ConferenceRoomService  {
     private ConferenceRoomRepository conferenceRoomRepository;
 
     @Autowired
@@ -18,44 +16,32 @@ public class ConferenceRoomService {
     }
 
 
-    public List<ConferenceRoomBaseModel> getAllConferenceRooms() {
-        List<ConferenceRoomBaseModel> conferenceRooms = new ArrayList<ConferenceRoomBaseModel>();
-        conferenceRoomRepository.findAll().forEach(conferenceRoomBaseModel -> conferenceRooms.add(conferenceRoomBaseModel));
+    public List<ConferenceRoomModel> getAllConferenceRooms() {
+        List<ConferenceRoomModel> conferenceRooms = new ArrayList<ConferenceRoomModel>();
+        conferenceRoomRepository.findAll().forEach(conferenceRoomModel -> conferenceRooms.add(conferenceRoomModel));
         return conferenceRooms;
     }
 
-    public ConferenceRoomBaseModel getConferenceRoomById(long id) {
-        ConferenceRoomBaseModel conferenceRoomBaseModel = conferenceRoomRepository.findById(id).orElse(null);
-        if (conferenceRoomBaseModel == null) {
-            throw new ConferenceNotFound("Nie odnaleziono sali konferencyjnej o id: " + id);
+    public ConferenceRoomModel getConferenceRoomById(long id) {
+        ConferenceRoomModel conferenceRoomModel = conferenceRoomRepository.findById(id).orElse(null);
+        if (conferenceRoomModel == null) {
+            throw new ConferenceErrorMessage("Nie odnaleziono sali konferencyjnej o id: " + id);
         } else {
             return conferenceRoomRepository.findById(id).get();
         }
-
-
-
-
-
-
     }
-
-    public void saveOrUpdate(ConferenceRoomBaseModel conferenceRoomBaseModel) {
-        conferenceRoomRepository.save(conferenceRoomBaseModel);
-    }
-
-    public ConferenceRoomBaseModel getConferenceRoomByRoomName(String roomName) {
-        ConferenceRoomBaseModel conferenceRoomBaseModel = conferenceRoomRepository.findByRoomName(roomName).orElse(null);
-        if (conferenceRoomBaseModel == null) {
-            conferenceRoomRepository.save(conferenceRoomBaseModel);
-        } else {
-            return throw new ConferenceRoomIsAlreadyExist("nazwa już istnieje");
-
-        }
-
-
 
     public void delete(long id) {
         conferenceRoomRepository.deleteById(id);
     }
 
+    public boolean save(ConferenceRoomModel conferenceRoomModel) {
+        List<ConferenceRoomModel> list = conferenceRoomRepository.findByRoomNameContainingIgnoreCase(conferenceRoomModel.getRoomName());
+        if (list.size() > 0) {
+            throw new ConferenceErrorMessage("Nazwa sali konferencyjnej jest już zajęta");
+        } else {
+            conferenceRoomRepository.save(conferenceRoomModel);
+            return true;
+        }
+    }
 }

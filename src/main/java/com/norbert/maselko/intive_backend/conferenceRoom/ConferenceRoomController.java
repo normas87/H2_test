@@ -13,26 +13,18 @@ import java.util.stream.Collectors;
 @RestController
 public class ConferenceRoomController {
 
-
     @Autowired
     ConferenceRoomService conferenceRoomService;
 
-
     @GetMapping("/rooms")
-    private List<ConferenceRoomBaseModel> getAll() {
+    private List<ConferenceRoomModel> getAll() {
         return conferenceRoomService.getAllConferenceRooms();
     }
 
     @GetMapping("/rooms/{id}")
-    private ConferenceRoomBaseModel getRoom(@PathVariable("id") long id) {
+    private ConferenceRoomModel getRoom(@PathVariable("id") long id) {
         return conferenceRoomService.getConferenceRoomById(id);
     }
-
-    @GetMapping("/rooms/{roomName}")
-    private ConferenceRoomBaseModel getRoom(@PathVariable("roomName") String roomName) {
-        return conferenceRoomService.getConferenceRoomByRoomName(roomName);
-    }
-
 
     @DeleteMapping("/rooms/{id}")
     private void deleteRoom(@PathVariable("id") long id) {
@@ -40,11 +32,10 @@ public class ConferenceRoomController {
     }
 
     @PostMapping("/rooms")
-    private long saveRoom(@Valid @RequestBody ConferenceRoomBaseModel conferenceRoomBaseModel) {
-            conferenceRoomService.saveOrUpdate(conferenceRoomBaseModel);
-        return conferenceRoomBaseModel.getId();
+    private long addRoom(@Valid @RequestBody ConferenceRoomModel conferenceRoomModel) {
+            conferenceRoomService.save(conferenceRoomModel);
+        return conferenceRoomModel.getId();
     }
-
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -54,9 +45,4 @@ public class ConferenceRoomController {
                 .map(ObjectError::getDefaultMessage)
                 .collect(Collectors.toList());
     }
-
-
-
-
-
 }

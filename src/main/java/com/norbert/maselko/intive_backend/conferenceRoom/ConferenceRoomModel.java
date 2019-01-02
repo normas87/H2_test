@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.*;
 
 @Entity
-public class ConferenceRoomBaseModel {
+public class ConferenceRoomModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,9 +24,12 @@ public class ConferenceRoomBaseModel {
     private int numberOfSeats;
     private int numberOfStandingPlaces;
     private int numberOfHangingPlaces;
-    private boolean availablePhone;
+    private boolean Phone;
+    private boolean Projector;
+    private boolean Interface;
 
-    public ConferenceRoomBaseModel() {
+
+    public ConferenceRoomModel() {
     }
 
     public long getId() {
@@ -85,17 +88,33 @@ public class ConferenceRoomBaseModel {
         this.numberOfHangingPlaces = numberOfHangingPlaces;
     }
 
-    public boolean isAvailablePhone() {
-        return availablePhone;
+    public boolean isPhone() {
+        return Phone;
     }
 
-    public void setAvailablePhone(boolean availablePhone) {
-        this.availablePhone = availablePhone;
+    public void setPhone(boolean phone) {
+        Phone = phone;
+    }
+
+    public boolean isProjector() {
+        return Projector;
+    }
+
+    public void setProjector(boolean projector) {
+        Projector = projector;
+    }
+
+    public boolean isInterface() {
+        return Interface;
+    }
+
+    public void setInterface(boolean anInterface) {
+        Interface = anInterface;
     }
 
     @Override
     public String toString() {
-        return "ConferenceRoomBaseModel{" +
+        return "ConferenceRoomModel{" +
                 "id=" + id +
                 ", roomName='" + roomName + '\'' +
                 ", floor=" + floor +
@@ -103,8 +122,11 @@ public class ConferenceRoomBaseModel {
                 ", numberOfSeats=" + numberOfSeats +
                 ", numberOfStandingPlaces=" + numberOfStandingPlaces +
                 ", numberOfHangingPlaces=" + numberOfHangingPlaces +
-                ", availablePhone=" + availablePhone +
+                ", Phone=" + Phone +
+                ", Projector=" + Projector +
+                ", Interface=" + Interface +
                 '}';
     }
 }
+
 
