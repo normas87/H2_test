@@ -1,6 +1,10 @@
 package com.norbert.maselko.intive_backend.conferenceRoom;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.*;
 
 @Entity
 public class ConferenceRoomBaseModel {
@@ -8,7 +12,13 @@ public class ConferenceRoomBaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @NotNull (message = "BAD_REQUEST --> name cannot be empty")
+    @NotBlank (message="BAD_REQUEST --> name should not contain whitespace")
+    @Size(min=2 ,  max = 20, message="BAD_REQUEST --> name should have atleast 2 characters and max 20 characters")
     private String roomName;
+    @Min(value = 0, message = "BAD_REQUEST --> min value of floor is 0" )
+    @Max(value = 10, message = "BAD_REQUEST --> max value of floor is 10" )
     private int floor;
     private boolean available;
     private int numberOfSeats;

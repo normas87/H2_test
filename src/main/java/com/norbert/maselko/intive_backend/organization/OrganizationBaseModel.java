@@ -12,7 +12,6 @@ public class OrganizationBaseModel {
         @GeneratedValue(strategy = GenerationType.AUTO)
         private long id;
         private String name;
-        private String lastName;
         private String email;
 
     public OrganizationBaseModel() {
@@ -34,13 +33,6 @@ public class OrganizationBaseModel {
         this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public String getEmail() {
         return email;
@@ -50,13 +42,5 @@ public class OrganizationBaseModel {
         this.email = email;
     }
 
-    @Override
-    public String toString() {
-        return "OrganizationBaseModel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
+
 }

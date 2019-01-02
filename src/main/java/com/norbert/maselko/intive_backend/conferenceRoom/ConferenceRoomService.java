@@ -2,6 +2,8 @@ package com.norbert.maselko.intive_backend.conferenceRoom;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +25,34 @@ public class ConferenceRoomService {
     }
 
     public ConferenceRoomBaseModel getConferenceRoomById(long id) {
-        return conferenceRoomRepository.findById(id).get();
+        ConferenceRoomBaseModel conferenceRoomBaseModel = conferenceRoomRepository.findById(id).orElse(null);
+        if (conferenceRoomBaseModel == null) {
+            throw new ConferenceNotFound("Nie odnaleziono sali konferencyjnej o id: " + id);
+        } else {
+            return conferenceRoomRepository.findById(id).get();
+        }
+
+
+
+
+
+
     }
 
     public void saveOrUpdate(ConferenceRoomBaseModel conferenceRoomBaseModel) {
         conferenceRoomRepository.save(conferenceRoomBaseModel);
     }
+
+    public ConferenceRoomBaseModel getConferenceRoomByRoomName(String roomName) {
+        ConferenceRoomBaseModel conferenceRoomBaseModel = conferenceRoomRepository.findByRoomName(roomName).orElse(null);
+        if (conferenceRoomBaseModel == null) {
+            conferenceRoomRepository.save(conferenceRoomBaseModel);
+        } else {
+            return throw new ConferenceRoomIsAlreadyExist("nazwa już istnieje");
+
+        }
+
+
 
     public void delete(long id) {
         conferenceRoomRepository.deleteById(id);

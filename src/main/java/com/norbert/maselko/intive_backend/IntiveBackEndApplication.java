@@ -9,6 +9,6 @@ public class IntiveBackEndApplication {
     public static void main(String[] args) {
         SpringApplication.run(IntiveBackEndApplication.class, args);
     }
-
+//start application class
 }
 

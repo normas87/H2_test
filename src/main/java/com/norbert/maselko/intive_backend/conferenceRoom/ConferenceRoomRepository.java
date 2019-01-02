@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface ConferenceRoomRepository extends CrudRepository<ConferenceRoomBaseModel, Long> {
   List<ConferenceRoomBaseModel>findAll();
-
+  List<ConferenceRoomBaseModel>findByRoomName(String roomName);
 }
-
