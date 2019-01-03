@@ -37,6 +37,7 @@ public class ConferenceRoomController {
         return conferenceRoomModel.getId();
     }
 
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public List<String> handleValidationExceptions(MethodArgumentNotValidException ex) {

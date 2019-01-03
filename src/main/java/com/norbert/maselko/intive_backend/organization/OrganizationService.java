@@ -36,10 +36,11 @@ public class OrganizationService {
         organizationRepository.deleteById(id);
     }
 
+
     public boolean save(OrganizationModel organizationModel) {
         List<OrganizationModel> list = organizationRepository.findByNameContainingIgnoreCase(organizationModel.getName());
         if (list.size() > 0) {
-            throw new OrganizationErrorMessage("Nazwa sali konferencyjnej jest już zajęta");
+            throw new OrganizationErrorMessage("Podana nazwa organizacji już istnieje");
         } else {
             organizationRepository.save(organizationModel);
             return true;

@@ -26,14 +26,13 @@ public class OrganizationController {
         return organizationService.getOrganizationById(id);
     }
 
-
     @DeleteMapping("/organizations/{id}")
     private void deleteOrganization(@PathVariable("id") long id) {
         organizationService.delete(id);
     }
 
     @PostMapping("/organizations")
-    private long addRoom(@Valid @RequestBody OrganizationModel organizationModel) {
+    private long addOrganization(@Valid @RequestBody OrganizationModel organizationModel) {
         organizationService.save(organizationModel);
         return organizationModel.getId();
     }

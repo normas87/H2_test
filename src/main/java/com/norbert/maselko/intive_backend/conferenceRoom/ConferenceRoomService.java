@@ -35,10 +35,14 @@ public class ConferenceRoomService  {
         conferenceRoomRepository.deleteById(id);
     }
 
+
+
+
+
     public boolean save(ConferenceRoomModel conferenceRoomModel) {
         List<ConferenceRoomModel> list = conferenceRoomRepository.findByRoomNameContainingIgnoreCase(conferenceRoomModel.getRoomName());
         if (list.size() > 0) {
-            throw new ConferenceErrorMessage("Nazwa sali konferencyjnej jest już zajęta");
+            throw new ConferenceErrorMessage("Podana nazwa sali konferencyjnej już istnieje");
         } else {
             conferenceRoomRepository.save(conferenceRoomModel);
             return true;
