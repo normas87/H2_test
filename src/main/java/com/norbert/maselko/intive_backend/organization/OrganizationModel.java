@@ -16,7 +16,7 @@ public class OrganizationModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long organizationId;
 
     @NotNull(message = "BAD_REQUEST --> name cannot be empty")
     @NotBlank(message = "BAD_REQUEST --> name should not contain whitespace")
@@ -32,15 +32,16 @@ public class OrganizationModel {
     @Future
     @JsonFormat(pattern="dd-MM-yyyy")
     private LocalDate stopConference;
+
     public OrganizationModel() {
     }
 
     public long getId() {
-        return id;
+        return organizationId;
     }
 
     public void setId(long id) {
-        this.id = id;
+        this.organizationId = id;
     }
 
     public String getName() {
@@ -78,7 +79,7 @@ public class OrganizationModel {
     @Override
     public String toString() {
         return "OrganizationModel{" +
-                "id=" + id +
+                "id=" + organizationId +
                 ", name='" + name + '\'' +
                 ", conferenceRoomModels=" + conferenceRoomModels +
                 ", startConference=" + startConference +

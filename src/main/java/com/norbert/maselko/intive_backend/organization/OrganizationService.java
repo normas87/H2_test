@@ -22,7 +22,6 @@ public class OrganizationService {
         return organizations;
     }
 
-
     public OrganizationModel getOrganizationById(long id) {
         OrganizationModel organizationModel = organizationRepository.findById(id).orElse(null);
         if (organizationModel == null) {
@@ -34,6 +33,16 @@ public class OrganizationService {
 
     public void delete(long id) {
         organizationRepository.deleteById(id);
+    }
+
+    public void updateOrganization(long id, OrganizationModel organizationModel) {
+        List<OrganizationModel> list = organizationRepository.findByOrganizationId(organizationModel.getId());
+        if (list.size() > 0) {
+            throw new OrganizationErrorMessage("Nie ma organizacji o id: " + id);
+        } else {
+            organizationModel.setId(id);
+            organizationRepository.save(organizationModel);
+        }
     }
 
 

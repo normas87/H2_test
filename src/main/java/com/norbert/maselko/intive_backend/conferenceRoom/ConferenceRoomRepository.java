@@ -7,4 +7,5 @@ import java.util.List;
 public interface ConferenceRoomRepository extends CrudRepository<ConferenceRoomModel, Long> {
   List<ConferenceRoomModel>findAll();
   List<ConferenceRoomModel>findByRoomNameContainingIgnoreCase(String roomName);
+  List<ConferenceRoomModel>findByRoomId(long roomId);
 }

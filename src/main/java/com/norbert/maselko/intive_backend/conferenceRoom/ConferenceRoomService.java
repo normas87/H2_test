@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ConferenceRoomService  {
+public class ConferenceRoomService {
+
     private ConferenceRoomRepository conferenceRoomRepository;
 
     @Autowired
     public ConferenceRoomService(ConferenceRoomRepository conferenceRoomRepository) {
         this.conferenceRoomRepository = conferenceRoomRepository;
     }
-
 
     public List<ConferenceRoomModel> getAllConferenceRooms() {
         List<ConferenceRoomModel> conferenceRooms = new ArrayList<ConferenceRoomModel>();
@@ -35,8 +35,15 @@ public class ConferenceRoomService  {
         conferenceRoomRepository.deleteById(id);
     }
 
-
-
+    public void updateRoom(long id, ConferenceRoomModel conferenceRoomModel) {
+        List<ConferenceRoomModel> list2 = conferenceRoomRepository.findByRoomId(conferenceRoomModel.getId());
+        if (list2.size() > 0) {
+            throw new ConferenceErrorMessage("Nie ma sali o id: " + id);
+        } else {
+            conferenceRoomModel.setId(id);
+            conferenceRoomRepository.save(conferenceRoomModel);
+        }
+    }
 
 
     public boolean save(ConferenceRoomModel conferenceRoomModel) {

@@ -10,7 +10,7 @@ public class ConferenceRoomModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long roomId;
 
     @NotNull(message = "BAD_REQUEST --> name cannot be empty")
     @NotBlank(message = "BAD_REQUEST --> name should not contain whitespace")
@@ -34,12 +34,20 @@ public class ConferenceRoomModel {
     public ConferenceRoomModel() {
     }
 
+    public ConferenceRoomModel(@NotNull(message = "BAD_REQUEST --> name cannot be empty") @NotBlank(message = "BAD_REQUEST --> name should not contain whitespace") @Size(min = 2, max = 20, message = "BAD_REQUEST --> name should have atleast 2 characters and max 20 characters") String roomName, @Min(value = 0, message = "BAD_REQUEST --> min value of floor is 0") @Max(value = 10, message = "BAD_REQUEST --> max value of floor is 10") int floor, int numberOfSeats, int numberOfStandingPlaces, int numberOfHangingPlaces) {
+        this.roomName = roomName;
+        this.floor = floor;
+        this.numberOfSeats = numberOfSeats;
+        this.numberOfStandingPlaces = numberOfStandingPlaces;
+        this.numberOfHangingPlaces = numberOfHangingPlaces;
+    }
+
     public long getId() {
-        return id;
+        return roomId;
     }
 
     public void setId(long id) {
-        this.id = id;
+        this.roomId = id;
     }
 
     public String getRoomName() {
@@ -117,7 +125,7 @@ public class ConferenceRoomModel {
     @Override
     public String toString() {
         return "ConferenceRoomModel{" +
-                "id=" + id +
+                "id=" + roomId +
                 ", roomName='" + roomName + '\'' +
                 ", floor=" + floor +
                 ", available=" + available +

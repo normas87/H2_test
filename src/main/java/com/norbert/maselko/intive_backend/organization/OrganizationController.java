@@ -37,6 +37,11 @@ public class OrganizationController {
         return organizationModel.getId();
     }
 
+    @RequestMapping(method = RequestMethod.PUT, value ="/organizations/{id}")
+    private void updateRoom(@RequestBody OrganizationModel organizationModel, @PathVariable("id") long id ){
+       organizationService.updateOrganization(id, organizationModel);
+    }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public List<String> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -45,6 +50,4 @@ public class OrganizationController {
                 .map(ObjectError::getDefaultMessage)
                 .collect(Collectors.toList());
     }
-
-
 }

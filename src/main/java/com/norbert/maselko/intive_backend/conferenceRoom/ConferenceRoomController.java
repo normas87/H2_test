@@ -2,12 +2,14 @@ package com.norbert.maselko.intive_backend.conferenceRoom;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -30,6 +32,13 @@ public class ConferenceRoomController {
     private void deleteRoom(@PathVariable("id") long id) {
         conferenceRoomService.delete(id);
     }
+
+    @RequestMapping(method = RequestMethod.PUT, value ="/rooms/{id}")
+    private void updateRoom(@RequestBody ConferenceRoomModel conferenceRoomModel, @PathVariable("id") long id ){
+        conferenceRoomService.updateRoom(id, conferenceRoomModel);
+    }
+
+
 
     @PostMapping("/rooms")
     private long addRoom(@Valid @RequestBody ConferenceRoomModel conferenceRoomModel) {
