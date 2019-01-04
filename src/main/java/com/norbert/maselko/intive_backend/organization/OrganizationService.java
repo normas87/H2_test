@@ -1,5 +1,6 @@
 package com.norbert.maselko.intive_backend.organization;
 
+import com.norbert.maselko.intive_backend.conferenceRoom.ConferenceRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +11,12 @@ import java.util.List;
 public class OrganizationService {
 
     private OrganizationRepository organizationRepository;
+    private ConferenceRoomRepository conferenceRoomRepository;
 
     @Autowired
-    public OrganizationService(OrganizationRepository organizationRepository) {
+    public OrganizationService(OrganizationRepository organizationRepository, ConferenceRoomRepository conferenceRoomRepository) {
         this.organizationRepository = organizationRepository;
+        this.conferenceRoomRepository = conferenceRoomRepository;
     }
 
     public List<OrganizationModel> getAllOrganizations() {
@@ -38,18 +41,17 @@ public class OrganizationService {
     public void updateOrganization(long id, OrganizationModel organizationModel) {
         List<OrganizationModel> list = organizationRepository.findByOrganizationId(organizationModel.getId());
         if (list.size() > 0) {
-            throw new OrganizationErrorMessage("Nie ma organizacji o id: " + id);
+            throw new OrganizationErrorMessage("BAD_REQUEST --> Organization: " + id + " does not exist");
         } else {
             organizationModel.setId(id);
             organizationRepository.save(organizationModel);
         }
     }
 
-
     public boolean save(OrganizationModel organizationModel) {
         List<OrganizationModel> list = organizationRepository.findByNameContainingIgnoreCase(organizationModel.getName());
         if (list.size() > 0) {
-            throw new OrganizationErrorMessage("Podana nazwa organizacji już istnieje");
+            throw new OrganizationErrorMessage("BAD_REQUEST --> Organization is already exist");
         } else {
             organizationRepository.save(organizationModel);
             return true;

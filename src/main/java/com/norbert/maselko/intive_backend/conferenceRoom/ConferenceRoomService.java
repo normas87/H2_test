@@ -38,7 +38,7 @@ public class ConferenceRoomService {
     public void updateRoom(long id, ConferenceRoomModel conferenceRoomModel) {
         List<ConferenceRoomModel> list2 = conferenceRoomRepository.findByRoomId(conferenceRoomModel.getId());
         if (list2.size() > 0) {
-            throw new ConferenceErrorMessage("Nie ma sali o id: " + id);
+            throw new ConferenceErrorMessage("BAD_REQUEST --> Conference room : "  + id + " does not exist");
         } else {
             conferenceRoomModel.setId(id);
             conferenceRoomRepository.save(conferenceRoomModel);
@@ -49,7 +49,7 @@ public class ConferenceRoomService {
     public boolean save(ConferenceRoomModel conferenceRoomModel) {
         List<ConferenceRoomModel> list = conferenceRoomRepository.findByRoomNameContainingIgnoreCase(conferenceRoomModel.getRoomName());
         if (list.size() > 0) {
-            throw new ConferenceErrorMessage("Podana nazwa sali konferencyjnej już istnieje");
+            throw new ConferenceErrorMessage("BAD_REQUEST --> Conference Room is already exist");
         } else {
             conferenceRoomRepository.save(conferenceRoomModel);
             return true;
