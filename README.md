@@ -16,16 +16,16 @@ Password: nie ma, zostawiamy puste pole
 curl aby dodać przykładową sale konferencyjną:
 
 curl -X POST \
-  http://localhost:8080/rooms \
+  http://localhost:8080/rooms/ \
   -H 'Content-Type: application/json' \
-  -H 'Postman-Token: d7d45321-5ed2-48e7-9cb6-8c6096932672' \
   -H 'cache-control: no-cache' \
-  -d '{
-        "roomName": "Sala czerwona",
+  -d '    {
+        "roomName": "sala czerwona",
         "floor": 2,
         "available": true,
         "numberOfSeats": 40,
-        "numberOfStandingPlaces": 30,
-        "numberOfHangingPlaces": 2,
+        "numberOfStandingPlaces": 10,
+        "numberOfHangingPlaces": 0,
         "availablePhone": false
     }'
+    
